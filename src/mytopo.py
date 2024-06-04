@@ -30,7 +30,7 @@ class MyTopo(Topo):
 
         """
         h1                          
-          \                       
+          \\                       
             s1 -- s2 -- ... -- sn -- h3
           /                       
         h2                          
