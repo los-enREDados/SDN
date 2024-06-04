@@ -1,0 +1,9 @@
+{
+    "policies":[{
+        "dst_port" : "80",
+        "protocol" : "TCP"
+    }, 
+    {
+        "protocol": "ICMP"
+    }]
+}
