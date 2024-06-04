@@ -36,6 +36,6 @@ class MyTopo(Topo):
         h2                          
         """
 
-topos = {'mytopo': (lambda: MyTopo())}
+topos = {'mytopo': MyTopo}
 
 

@@ -11,6 +11,6 @@ CONTROLLER_PORT := 6633
 NSWITCHES = 4
 
 mininet:
-	mn --custom ${TOPOLOGY_FILE}  --topo ${TOPOLOGY_NAME}  --controller remote,ip=${CONTROLLER_IP},port=${CONTROLLER_PORT}
+	mn --custom ${TOPOLOGY_FILE}  --topo ${TOPOLOGY_NAME},${NSWITCHES}  --controller remote,ip=${CONTROLLER_IP},port=${CONTROLLER_PORT}
 
 

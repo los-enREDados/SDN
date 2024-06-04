@@ -26,21 +26,31 @@ policyFile = "%s/pox/pox/misc/firewall-policies.csv" % os.environ[ 'HOME' ]
 
 
 class Firewall (EventMixin):
-
+    
     def __init__ (self):
+        self.firewall_switch_dpid = 1
+        self.i = 0
         self.listenTo(core.openflow)
-        log.debug("Enabling Firewall Module")
+
 
     def _handle_ConnectionUp (self, event):
         ''' Add your logic here ... '''
-
-
-
+        if self.firewall_switch_dpid != event.dpid:
+            return
+        
         log.debug("Firewall rules installed on %s", dpidToStr(event.dpid))
+
+        my_match = of.ofp_match(
+            nw_proto=1, dl_type=0x800
+        )
+        flow_mod = of.ofp_flow_mod(match=my_match)
+        event.connection.send(flow_mod)
+
+
+
 
 def launch ():
     '''
     Starting the Firewall module
     '''
-    log.info("JAMON JAMON")
     core.registerNew(Firewall)
