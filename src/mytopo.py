@@ -5,7 +5,7 @@ from mininet.link import TCLink
 
 
 class MyTopo(Topo):
-    def __init__(self, cant_switches=2):
+    def __init__(self, cant_switches=4):
         Topo.__init__(self)
         # Add hosts and switches
         h1 = self.addHost('h1')
@@ -19,10 +19,9 @@ class MyTopo(Topo):
         
         # Segunda parte: todos los switches linearmente conectados
         prev_switch = s1
-        for i in range(2, cant_switches): 
+        for i in range(2, cant_switches+1): 
             switch = self.addSwitch('s{i}'.format(i=i))
             self.addLink(prev_switch, switch)
-            print(f'prev_switch: {prev_switch}, switch: {switch}')
             prev_switch = switch
 
 
