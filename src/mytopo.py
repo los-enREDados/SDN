@@ -1,4 +1,3 @@
-from mininet import Mininet
 from mininet.node import Host, OVSSwitch
 
 from mininet.topo import Topo
@@ -6,13 +5,12 @@ from mininet.link import TCLink
 
 
 class MyTopo(Topo):
-    def __init__(self, cant_switches=5):
+    def __init__(self, cant_switches=2):
         Topo.__init__(self)
         # Add hosts and switches
         h1 = self.addHost('h1')
         h2 = self.addHost('h2')
         h3 = self.addHost('h3')
-        h4 = self.addHost('h4')
 
         # Primer parte: h1 y h2 conectados al primer switch
         s1 = self.addSwitch('s1')
@@ -24,34 +22,21 @@ class MyTopo(Topo):
         for i in range(2, cant_switches): 
             switch = self.addSwitch('s{i}'.format(i=i))
             self.addLink(prev_switch, switch)
+            print(f'prev_switch: {prev_switch}, switch: {switch}')
             prev_switch = switch
 
 
-        # Tercer parte: h3 y h4 conectados al ultimo switch
-        self.addLink(h3, switch)
-        self.addLink(h4, switch)
+        # Tercer parte: h3 conectado al ultimo switch
+        self.addLink(h3, prev_switch)
 
-        # Dejo este comentario por si necesitamos ponerle perdida, se hace asi        
-        # self.addLink(cliente2, switch, cls=TCLink, loss=10)
         """
-        h1                          h3
-          \                       /
-            s1 -- s2 -- ... -- sn
-          /                       \
-        h2                          h4
+        h1                          
+          \                       
+            s1 -- s2 -- ... -- sn -- h3
+          /                       
+        h2                          
         """
 
 topos = {'mytopo': (lambda: MyTopo())}
 
 
-def main():
-    red = Mininet(topo=MyTopo(5), link=TCLink)
-
-    # Inicia la red y ejecuta un comando.
-    red.start()
-    red.pingAll()
-    red.stop()
-
-
-if __name__ == '__main__':
-    main()
