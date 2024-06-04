@@ -1,0 +1,62 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Apuntes TP de Redes
+#+date: <2024-06-04 Tue>
+#+author: Tomas Fabrizio Orsi
+#+email: torsi@fi.uba.ar
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 29.3 (Org mode 9.6.30)
+#+cite_export:
+
+* Introducción
+** Software Defined Networking
+- Ruteo basado en direccion no es suficiente.
+
+** Open Flow
+- Reutiliza las memorias CAM ya presentes en los switches.
+- La idea es generar politicas en base a flujos, no basado en direcciones.
+- Partes de Open Flow:
+  1. Una tabla de flujos
+  2. Un canal encriptado de comunicaciones hacia un controlador
+  3. El protocolo OpenFlow
+- OpenFlow quiere controlar el plano de control (como administrar el dispositivo)
+- Hay un *controlador*, un elemento externo capaz de configurar la tabla de flujo
+- Las tablas de flujos admiten wildcards/regex.
+- Hay 10 campos que se pueden leer.
+  [[./CamposDeOpenFlow.png]]
+
+* Propuesta
+- Topologia *dinamica*.
+- Usar *OpenFlow* para implementar un *Firewall*.
+- Pox es el programa que implementa el estandar Openflow.
+
+* Preguntas a responder
+** ¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?
+** ¿Cuál es la diferencia entre un Switch convencional y un Switch OpenFlow?
+** ¿Se pueden reemplazar todos los routers de la Intenet por Switches OpenFlow? Piense en el escenario interASes para elaborar su respuesta
+* Ejercicios
+** Topologia
+- Topologia parametrizable
+- Cantidad de switches variable (se recibe por parametro la cantidad), formando una *cadena*. En cada extremo hay un host.
+- Controlador:
+  - Tiene que enseñarle la topologia a los switches.
+  - Se deben agregar los logs necesarios al controlador para poder verificar su funcionamiento, y poder contrastarlo con
+wireshark
+- *Firewall*
+    1. Se deben descartar todos los mensajes cuyo puerto destino sea 80.
+    2. Se deben descartar todos los mensajes que provengan del host 1, tengan como puerto destino el 5001, y esten
+    utilizando el protocolo UDP.
+    3. Se debe elegir dos hosts cualquiera, y los mismos no deben poder comunicarse de ninguna forma.
+
+* Codigo
+
+* Entrega
+- La entrega debe contar con un informe donde se demuestre conocimiento en todas las herramientas utilizadas (mininet,
+pox, wireshark, iperf), así como también los resultados de las simulaciones (capturas de wireshark y logs del controlador).
+
+* Links Utiles
