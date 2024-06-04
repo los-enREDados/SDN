@@ -68,6 +68,7 @@ class Firewall (EventMixin):
                 matches = self.create_match_from(p)
                 for match in matches:
                     self.policies.append(match)
+    
         
     def create_match_from(self,policy):  
         matches = []
@@ -76,14 +77,39 @@ class Firewall (EventMixin):
         
         if "src_ip" in policy:
             match.nw_src = str(policy["src_ip"])
+
         if "dst_ip" in policy:
             match.nw_dst = str(policy["dst_ip"])
-        if "src_port" in policy:
-            match.tp_src = int(policy["src_port"])
-        if "dst_port" in policy:
-            match.tp_dst = int(policy["dst_port"])
+
         if "protocol" in policy:
             match.nw_proto = protToNumber[policy["protocol"]]
+
+        if "src_port" in policy:
+            # Puse protocolo != UDP/TCP
+            # None -> Baneas con TCP y UDP
+            if match.nw_proto == None:
+                matchPair = match.clone()
+                matchPair.nw_proto = protToNumber["UDP"]
+                matchPair.tp_src = int(policy["src_port"])
+                matches.append(matchPair)
+                match.nw_proto = protToNumber["TCP"]
+            
+
+            elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
+                print("proto %s", match.nw_proto)
+                raise Exception("Cannot ban TCP/UDP port whilst using non TCP/UDP protocol.") 
+            
+            
+
+
+
+
+            # Puse UDP/TCP -> Baneas solo el que te dijeron
+            match.tp_src = int(policy["src_port"])
+
+        if "dst_port" in policy:
+            match.tp_dst = int(policy["dst_port"])
+
         if "banned_tuples" in policy:
             print(policy["banned_tuples"])
             a, b = policy["banned_tuples"]
@@ -114,11 +140,11 @@ class Firewall (EventMixin):
         log.debug("Firewall rules installed on %s", dpidToStr(event.dpid))
 
         for policy in self.policies:
+            print(policy)
             flow_mod = of.ofp_flow_mod(match=policy)
             event.connection.send(flow_mod)
         
-
-
+        print("Total rules installed: ", len(self.policies))
 
 
 
