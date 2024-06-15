@@ -1,9 +1,9 @@
 {
     "policies":[{
-        "src_port" : "80",
+        "src_port" : "8080",
         "protocol" : "TCP"
     }, 
     {
-        "src_port" : "80"
+        "src_port" : "8080"
     }]
 }

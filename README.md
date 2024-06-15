@@ -80,14 +80,26 @@ xterm h1 h2 h3
 
 
 ### Probar conexiones
+Nota: Existe iperf 2.0 e iperf 3.0. Están disponibles las instrucciones para ambos.
+
 #### Server
+Iperf 2.0:
 ```console
 iperf -s -p <port> 
+```
+Iperf 3.0:
+```console
+iperf3 -s -p <port> 
 ```
 >Simula un servidor el cual acepta conexiones. Agregar la flag `-u` al final para testear con UDP enves de TCP
 
 #### Cliente
+Iperf 2.0
 ```console
 iperf -c <ip_addr> -e -p <port> 
+```
+Iperf 3.0
+```console
+iperf3 -c <ip_addr> -p <port>
 ```
 > Simula un cliente el cual se conecta y intenta enviar paquetes al servidor hosteado en la (ip,port) correspondiente. Agregar la flag `-u` para testear con UDP enves de TCP.
