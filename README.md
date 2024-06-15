@@ -14,20 +14,20 @@ make run
 Las policies se encuentran en el archivo `policies.json` y tienen el siguiente formato:
 ```json
     {
-        "src_ip": IppAddr
-        "dst_ip": IppAddr
-        "src_port": port
-        "dst_port": port
-        "protocol": "protocol"
-        "banned_tuples": [IppAddr,IppAddr]
+        "src_ip": "0.0.0.0",
+        "dst_ip": "0.0.0.0",
+        "src_port": 0,
+        "dst_port": 0,
+        "protocol": "protocol",
+        "banned_tuples": ["0.0.0.0",,"0.0.0.0",]
     }
 
 ```
 Estas se pueden crear complejas como por ejemplo:
 ```json
     {
-        "src_ip": "10.0.0.1"
-        "src_port": 80
+        "src_ip": "10.0.0.1",
+        "src_port": 80,
         "protocol": "TCP"
     }
 
