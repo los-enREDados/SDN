@@ -66,7 +66,6 @@ class Firewall (EventMixin):
             policies = json_file["policies"]
             for p in policies:
                 matches = self.create_match_from(p)
-                print(matches)
                 for match in matches:
                     self.policies.append(match)
     
@@ -77,7 +76,6 @@ class Firewall (EventMixin):
         match.dl_type = pkt.ethernet.IP_TYPE
 
         if "banned_tuples" in policy:
-            print(policy["banned_tuples"])
             a = IPAddr(policy["banned_tuples"][0])
             b = IPAddr(policy["banned_tuples"][1])
 
@@ -108,16 +106,9 @@ class Firewall (EventMixin):
                 # Puse protocolo != UDP/TCP
                 # None -> Baneas con TCP y UDP
                 if match.nw_proto == None:
-                    # matchPair = match.clone()
-                    # matchPair.nw_proto = protToNumber["UDP"]
-                    # matchPair.tp_src = int(policy["src_port"])
-                    # matches.append(matchPair)
-                    # match.nw_proto = protToNumber["TCP"]
                     match = self.unespecified_protocol(matches, policy, match, is_src = True)
-                
-
+                    
                 elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
-                    print("proto %s", match.nw_proto)
                     raise Exception("Cannot ban TCP/UDP port whilst using non TCP/UDP protocol.") 
                 # Puse UDP/TCP -> Baneas solo el que te dijeron
                 match.tp_src = int(policy["src_port"])
@@ -146,40 +137,36 @@ class Firewall (EventMixin):
         match.nw_proto = protToNumber["TCP"]
         return match
         
-
-    def _handle_ConnectionUp (self, event):
+    def _handle_ConnectionUp(self, event):
         ''' Add your logic here ... '''
         if self.firewall_switch_dpid != event.dpid:
             return
         
         log.debug("Firewall rules installed on %s", dpidToStr(event.dpid))
 
+        # High priority rules to drop packets based on policies
         for policy in self.policies:
-            print(policy)
+            log.debug("Installing policy: %s", policy)
             flow_mod = of.ofp_flow_mod(match=policy)
+            # No action means drop the packet
             event.connection.send(flow_mod)
-        
-        print("Total rules installed: ", len(self.policies))
 
 
-    def _handle_PacketIn(self, event):
-        packet = event.parsed
-        eth = packet
-        
-        if eth.type == eth.IP_TYPE:
-            ip = packet.next
-            log.info("IPv4 packet: %s -> %s, protocol: %s", ip.srcip, ip.dstip, ip.protocol)
+    # def _handle_PacketIn(self, event):
+    #     packet = event.parsed # MAC
+    #     log.info("Packet in: %s", packet)
+    #     if packet.type == packet.IP_TYPE:
+    #         ip = packet.next # IP
+    #         log.info("IPv4 packet: %s -> %s, protocol: %s", ip.srcip, ip.dstip, ip.protocol)
             
-            if ip.protocol == ip.TCP_PROTOCOL:
-                tcp = ip.next
-                log.info("TCP packet: %s:%s -> %s:%s", ip.srcip, tcp.srcport, ip.dstip, tcp.dstport)
-            elif ip.protocol == ip.UDP_PROTOCOL:
-                udp = ip.next
-                log.info("UDP packet: %s:%s -> %s:%s", ip.srcip, udp.srcport, ip.dstip, udp.dstport)
-        #Esto es para ICMP
-        elif eth.type == eth.ARP_TYPE:
-            arp = packet.next
-            log.info("ARP packet: %s -> %s, opcode: %s", arp.hwsrc, arp.hwdst, arp.opcode)
+    #         if ip.protocol == ip.TCP_PROTOCOL:
+    #             tcp = ip.next # TRANSPORT
+    #             log.info("TCP packet: %s:%s -> %s:%s", ip.srcip, tcp.srcport, ip.dstip, tcp.dstport)
+    #         elif ip.protocol == ip.UDP_PROTOCOL:
+    #             udp = ip.next # TRANSPORT
+    #             log.info("UDP packet: %s:%s -> %s:%s", ip.srcip, udp.srcport, ip.dstip, udp.dstport)
+    #         # Add further processing or flow installation based on IP packet details
+
 
 def launch ():
     '''
