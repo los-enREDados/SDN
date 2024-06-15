@@ -7,6 +7,13 @@ IPERF           := iperf
 SERVERPORT      := 8080
 IPSERVER        := 10.0.0.1
 
+IPERFFLAGS      := 
+ifeq (${IPERF}, iperf)
+	IPERFFLAGS += -e
+else
+	IPERFFLAGS += -V
+endif
+
 
 install:
 	cd pox/ext/; ln -s ../../src/firewall.py || true
@@ -23,5 +30,5 @@ create-server:
 	${IPERF} -s -p ${SERVERPORT}
 
 send-data:
-	${IPERF} -c ${IPSERVER} -e -p ${SERVERPORT} 
+	${IPERF} -c ${IPSERVER} ${IPERFFLAGS} -p ${SERVERPORT} 
 

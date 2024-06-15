@@ -58,8 +58,13 @@ En caso de que no esté encendido, se tiene que encender.
 systemctl start ovsdb-server
 ```
 #### En OpenRC
+¡El orden es importante!
 ```console
 rc-service ovsdb-server start
+```
+Y despues:
+```console
+rc-service ovs-vswitchd start
 ```
 
 ### Correr mininet
