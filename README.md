@@ -19,7 +19,7 @@ Las policies se encuentran en el archivo `policies.json` y tienen el siguiente f
         "src_port": 0,
         "dst_port": 0,
         "protocol": "protocol",
-        "banned_tuples": ["0.0.0.0",,"0.0.0.0",]
+        "banned_tuples": ["0.0.0.0","0.0.0.0"]
     }
 
 ```
