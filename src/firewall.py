@@ -11,7 +11,7 @@ from pox.core import core
 import pox.openflow.libopenflow_01 as of
 from pox.lib.revent import *
 from pox.lib.util import dpidToStr
-from pox.lib.addresses import EthAddr
+from pox.lib.addresses import IPAddr
 from collections import namedtuple
 from translator import protToNumber
 import pox.lib.packet as pkt
@@ -66,6 +66,7 @@ class Firewall (EventMixin):
             policies = json_file["policies"]
             for p in policies:
                 matches = self.create_match_from(p)
+                print(matches)
                 for match in matches:
                     self.policies.append(match)
     
@@ -74,45 +75,12 @@ class Firewall (EventMixin):
         matches = []
         match = of.ofp_match()
         match.dl_type = pkt.ethernet.IP_TYPE
-        
-        if "src_ip" in policy:
-            match.nw_src = str(policy["src_ip"])
 
-        if "dst_ip" in policy:
-            match.nw_dst = str(policy["dst_ip"])
-
-        if "protocol" in policy:
-            match.nw_proto = protToNumber[policy["protocol"]]
-
-        if "src_port" in policy:
-            # Puse protocolo != UDP/TCP
-            # None -> Baneas con TCP y UDP
-            if match.nw_proto == None:
-                matchPair = match.clone()
-                matchPair.nw_proto = protToNumber["UDP"]
-                matchPair.tp_src = int(policy["src_port"])
-                matches.append(matchPair)
-                match.nw_proto = protToNumber["TCP"]
-            
-
-            elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
-                print("proto %s", match.nw_proto)
-                raise Exception("Cannot ban TCP/UDP port whilst using non TCP/UDP protocol.") 
-            
-            
-
-
-
-
-            # Puse UDP/TCP -> Baneas solo el que te dijeron
-            match.tp_src = int(policy["src_port"])
-
-        if "dst_port" in policy:
-            match.tp_dst = int(policy["dst_port"])
-
+        print("policy: ", policy)
         if "banned_tuples" in policy:
             print(policy["banned_tuples"])
-            a, b = policy["banned_tuples"]
+            a = IPAddr(policy["banned_tuples"][0])
+            b = IPAddr(policy["banned_tuples"][1])
 
             if "src_ip" in policy or "dst_ip" in policy:
                 raise Exception("Cannot ban both src and dst ip while banning a tuple")
@@ -126,6 +94,37 @@ class Firewall (EventMixin):
             match.nw_src = a
 
             matches.append(matchPair)
+
+        else:
+            if "src_ip" in policy:
+                match.nw_src = IPAddr(policy["src_ip"])
+
+            if "dst_ip" in policy:
+                match.nw_dst = IPAddr(policy["dst_ip"])
+
+            if "protocol" in policy:
+                match.nw_proto = protToNumber[policy["protocol"]]
+
+            if "src_port" in policy:
+                # Puse protocolo != UDP/TCP
+                # None -> Baneas con TCP y UDP
+                if match.nw_proto == None:
+                    matchPair = match.clone()
+                    matchPair.nw_proto = protToNumber["UDP"]
+                    matchPair.tp_src = int(policy["src_port"])
+                    matches.append(matchPair)
+                    match.nw_proto = protToNumber["TCP"]
+                
+
+                elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
+                    print("proto %s", match.nw_proto)
+                    raise Exception("Cannot ban TCP/UDP port whilst using non TCP/UDP protocol.") 
+                # Puse UDP/TCP -> Baneas solo el que te dijeron
+                match.tp_src = int(policy["src_port"])
+
+            if "dst_port" in policy:
+                match.tp_dst = int(policy["dst_port"])
+
 
         matches.append(match)
         return matches
