@@ -4,6 +4,11 @@ Una vez clonado se tiene que correr el siguiente comando:
 ```console
 git submodule update --init --recursive
 ```
+Luego para el setup correr:
+```console
+make install 
+```
+
 ## Ejecuccion de firewall
 Para abrir pox y levantar el firewall correr:
 ```console
