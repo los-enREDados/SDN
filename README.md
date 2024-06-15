@@ -50,6 +50,19 @@ Que bloquearia los paquetes provenientes del la direccion 10.0.0.1 envias utiliz
     </ol>
 
 ## Probar con mininet
+### Prender OpenVS switch
+Mininet necesita que el daemon de OpenVS switch esté encendido para funcionar.
+En caso de que no esté encendido, se tiene que encender.
+#### En systemdD
+```console
+systemctl start ovsdb-server
+```
+#### En OpenRC
+```console
+rc-service ovsdb-server start
+```
+
+### Correr mininet
 Para probar abrir mininet (requiere permisos de root):
 
 ```console
@@ -77,4 +90,4 @@ iperf -s -p <port>
 ```console
 iperf -c <ip_addr> -e -p <port> 
 ```
-> Simula un cliente el cual se conecta y intenta enviar paquetes al servidor hosteado en la (ip,port) correspondiente. Agregar la flag `u` para testear con UDP enves de TCP.
+> Simula un cliente el cual se conecta y intenta enviar paquetes al servidor hosteado en la (ip,port) correspondiente. Agregar la flag `-u` para testear con UDP enves de TCP.

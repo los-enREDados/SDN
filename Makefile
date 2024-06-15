@@ -9,7 +9,7 @@ TOPOLOGY_FILE   := src/mytopo.py
 TOPOLOGY_NAME   := mytopo
 CONTROLLER_IP   := 127.0.0.1
 CONTROLLER_PORT := 6633
-NSWITCHES = 4
+NSWITCHES       := 4
 
 mininet:
 	mn --custom ${TOPOLOGY_FILE}  --topo ${TOPOLOGY_NAME},${NSWITCHES}  --controller remote,ip=${CONTROLLER_IP},port=${CONTROLLER_PORT}
