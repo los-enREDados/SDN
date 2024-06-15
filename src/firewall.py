@@ -55,7 +55,7 @@ POLICIES = "policies.json"
 class Firewall (EventMixin):
     
     def __init__ (self):
-        self.firewall_switch_dpid = 2
+        self.firewall_switch_dpid = 1
         self.policies = []
         self.read_policies(POLICIES)
         self.listenTo(core.openflow)

@@ -3,15 +3,23 @@ TOPOLOGY_NAME   := mytopo
 CONTROLLER_IP   := 127.0.0.1
 CONTROLLER_PORT := 6633
 NSWITCHES       := 4
-IPERF           := iperf
-SERVERPORT      := 8080
-IPSERVER        := 10.0.0.1
+IPERF           := iperf3
+PORT            := 8080
+IP              := 10.0.0.1
+PROT            := TCP
+PROTFLAGS       :=
 
-IPERFFLAGS      := 
+# IPERFFLAGS      := 
 ifeq (${IPERF}, iperf)
 	IPERFFLAGS += -e
 else
 	IPERFFLAGS += -V
+endif
+
+ifeq (${PROT}, TCP)
+	PROTFLAGS += 
+else
+	PROTFLAGS += -u
 endif
 
 
@@ -27,8 +35,8 @@ mininet:
 	mn --custom ${TOPOLOGY_FILE}  --topo ${TOPOLOGY_NAME},${NSWITCHES}  --controller remote,ip=${CONTROLLER_IP},port=${CONTROLLER_PORT}
 
 create-server:
-	${IPERF} -s -p ${SERVERPORT}
+	${IPERF} -s -p ${PORT}
 
 send-data:
-	${IPERF} -c ${IPSERVER} ${IPERFFLAGS} -p ${SERVERPORT} 
+	${IPERF} -c ${IP} ${IPERFFLAGS} -p ${PORT} ${PROTFLAGS}
 
