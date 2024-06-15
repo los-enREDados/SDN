@@ -113,7 +113,7 @@ class Firewall (EventMixin):
                     # matchPair.tp_src = int(policy["src_port"])
                     # matches.append(matchPair)
                     # match.nw_proto = protToNumber["TCP"]
-                    match = self.adunespecified_protocol(matches, policy, match, is_src = True)
+                    match = self.unespecified_protocol(matches, policy, match, is_src = True)
                 
 
                 elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
@@ -176,6 +176,7 @@ class Firewall (EventMixin):
             elif ip.protocol == ip.UDP_PROTOCOL:
                 udp = ip.next
                 log.info("UDP packet: %s:%s -> %s:%s", ip.srcip, udp.srcport, ip.dstip, udp.dstport)
+        #Esto es para ICMP
         elif eth.type == eth.ARP_TYPE:
             arp = packet.next
             log.info("ARP packet: %s -> %s, opcode: %s", arp.hwsrc, arp.hwdst, arp.opcode)
