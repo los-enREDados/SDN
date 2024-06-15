@@ -64,6 +64,7 @@ class Firewall (EventMixin):
         with open(filename) as f:
             json_file = json.load(f)
             policies = json_file["policies"]
+            matches = []
             for p in policies:
                 matches = self.create_match_from(p)
                 for match in matches:
@@ -71,7 +72,9 @@ class Firewall (EventMixin):
     
         
     def create_match_from(self,policy):  
-        matches = []
+        doneProcessingMatches = []
+        toBeProcessedMatches  = []
+
         match = of.ofp_match()
         match.dl_type = pkt.ethernet.IP_TYPE
 
@@ -87,55 +90,66 @@ class Firewall (EventMixin):
             matchPair.nw_src = a 
             matchPair.nw_dst = b 
 
-            match.nw_dst = b
-            match.nw_src = a
+            match.nw_src = b
+            match.nw_dst = a
 
-            matches.append(matchPair)
+            toBeProcessedMatches.append(matchPair)
 
-        else:
-            if "src_ip" in policy:
-                match.nw_src = IPAddr(policy["src_ip"])
+        toBeProcessedMatches.append(match)
 
-            if "dst_ip" in policy:
-                match.nw_dst = IPAddr(policy["dst_ip"])
+        i = 0
+        while True:
+            if i + 1 > len(toBeProcessedMatches):
+                break
 
-            if "protocol" in policy:
-                match.nw_proto = protToNumber[policy["protocol"]]
+            currentMatch = toBeProcessedMatches[i].clone()
+            i = i + 1
 
-            if "src_port" in policy:
+            if currentMatch.nw_src == None and "src_ip" in policy:
+                currentMatch.nw_src = IPAddr(policy["src_ip"])
+
+            if currentMatch.nw_dst == None and "dst_ip" in policy:
+                currentMatch.nw_dst = IPAddr(policy["dst_ip"])
+
+            if currentMatch.nw_proto == None and "protocol" in policy:
+                currentMatch.nw_proto = protToNumber[policy["protocol"]]
+
+            if currentMatch.tp_src == None and "src_port" in policy:
                 # Puse protocolo != UDP/TCP
                 # None -> Baneas con TCP y UDP
-                if match.nw_proto == None:
-                    match = self.unespecified_protocol(matches, policy, match, is_src = True)
+                if currentMatch.nw_proto == None:
+                    currentMatch, twinMatch = self.unespecified_protocol(policy, currentMatch, is_src = True)
+                    toBeProcessedMatches.append(twinMatch)
                     
-                elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
+                elif currentMatch.nw_proto != protToNumber["TCP"] and currentMatch.nw_proto != protToNumber["UDP"]:
                     raise Exception("Cannot ban TCP/UDP port whilst using non TCP/UDP protocol.") 
                 # Puse UDP/TCP -> Baneas solo el que te dijeron
-                match.tp_src = int(policy["src_port"])
+                currentMatch.tp_src = int(policy["src_port"])
 
-            if "dst_port" in policy:
-                if match.nw_proto == None:
-                    match = self.unespecified_protocol(matches, policy, match, is_src = False)
+            if currentMatch.tp_dst == None and "dst_port" in policy:
+                if currentMatch.nw_proto == None:
+                    currentMatch, twinMatch = self.unespecified_protocol(policy, currentMatch, is_src = False)
+                    toBeProcessedMatches.append(twinMatch)
                 
-                elif match.nw_proto != protToNumber["TCP"] and match.nw_proto != protToNumber["UDP"]:
+                elif currentMatch.nw_proto != protToNumber["TCP"] and currentMatch.nw_proto != protToNumber["UDP"]:
                     raise Exception("Cannot ban TCP/UDP port whilst using non TCP/UDP protocol.")
-                match.tp_dst = int(policy["dst_port"])
+                currentMatch.tp_dst = int(policy["dst_port"])
                 
+            doneProcessingMatches.append(currentMatch)
 
 
-        matches.append(match)
-        return matches
+        return doneProcessingMatches
         
-    def unespecified_protocol(self, matches, policy, match, is_src = True):
+    def unespecified_protocol(self, policy, match, is_src = True):
         matchPair = match.clone()
         matchPair.nw_proto = protToNumber["UDP"]
         if is_src:
             matchPair.tp_src = int(policy["src_port"])
         else:
             matchPair.tp_dst = int(policy["dst_port"])
-        matches.append(matchPair)
+        # matches.append(matchPair)
         match.nw_proto = protToNumber["TCP"]
-        return match
+        return match, matchPair
         
     def _handle_ConnectionUp(self, event):
         ''' Add your logic here ... '''
