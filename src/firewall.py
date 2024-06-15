@@ -55,7 +55,7 @@ POLICIES = "policies.json"
 class Firewall (EventMixin):
     
     def __init__ (self):
-        self.firewall_switch_dpid = 1
+        self.firewall_switch_dpid = 2
         self.policies = []
         self.read_policies(POLICIES)
         self.listenTo(core.openflow)
@@ -76,7 +76,9 @@ class Firewall (EventMixin):
         toBeProcessedMatches  = []
 
         match = of.ofp_match()
+        
         match.dl_type = pkt.ethernet.IP_TYPE
+        
 
         if "banned_tuples" in policy:
             a = IPAddr(policy["banned_tuples"][0])
@@ -166,21 +168,40 @@ class Firewall (EventMixin):
             event.connection.send(flow_mod)
 
 
-    # def _handle_PacketIn(self, event):
-    #     packet = event.parsed # MAC
-    #     log.info("Packet in: %s", packet)
-    #     if packet.type == packet.IP_TYPE:
-    #         ip = packet.next # IP
-    #         log.info("IPv4 packet: %s -> %s, protocol: %s", ip.srcip, ip.dstip, ip.protocol)
-            
-    #         if ip.protocol == ip.TCP_PROTOCOL:
-    #             tcp = ip.next # TRANSPORT
-    #             log.info("TCP packet: %s:%s -> %s:%s", ip.srcip, tcp.srcport, ip.dstip, tcp.dstport)
-    #         elif ip.protocol == ip.UDP_PROTOCOL:
-    #             udp = ip.next # TRANSPORT
-    #             log.info("UDP packet: %s:%s -> %s:%s", ip.srcip, udp.srcport, ip.dstip, udp.dstport)
-    #         # Add further processing or flow installation based on IP packet details
+    def _handle_PacketIn(self, event):
+        if self.firewall_switch_dpid != event.dpid:
+            return
+        eth = event.parsed # MAC
+        if eth.type != pkt.ethernet.IP_TYPE:
+            return
+        for policy in self.policies:
+            if self.match_policy(policy, eth):
+                log.debug("Packet from %s -> %s dropped with policy: %s",eth.next.srcip,eth.next.dstip,policy)
+                return
 
+
+    def match_policy(self, match, eth):
+        ip = eth.next
+        if ip:
+            if match.nw_src:
+                if match.nw_src != ip.srcip:
+                    return False
+            if match.nw_dst:
+                if match.nw_dst != ip.dstip:
+                    return False
+            transport = ip.next
+            if transport:
+                if match.nw_proto:
+                    if match.nw_proto != ip.protocol:
+                        return False
+                if match.tp_src:
+                    if match.tp_src != transport.srcport:
+                        return False
+                if match.tp_dst:
+                    if match.tp_dst != transport.dstport:
+                        return False
+        return True
+            
 
 def launch ():
     '''
