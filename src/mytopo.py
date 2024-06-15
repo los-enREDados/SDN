@@ -11,6 +11,7 @@ class MyTopo(Topo):
         h1 = self.addHost('h1')
         h2 = self.addHost('h2')
         h3 = self.addHost('h3')
+        h4 = self.addHost('h4')
 
         # Primer parte: h1 y h2 conectados al primer switch
         s1 = self.addSwitch('s1')
@@ -27,13 +28,15 @@ class MyTopo(Topo):
 
         # Tercer parte: h3 conectado al ultimo switch
         self.addLink(h3, prev_switch)
+        self.addLink(h4, prev_switch)
 
         """
-        h1                          
-          \\                       
-            s1 -- s2 -- ... -- sn -- h3
-          /                       
-        h2                          
+        h1                          h3 
+          \\                      / 
+            s1 -- s2 -- ... -- sn 
+           /                       \\
+        h2                         h4
+                                  
         """
 
 topos = {'mytopo': MyTopo}

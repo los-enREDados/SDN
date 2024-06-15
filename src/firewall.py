@@ -7,7 +7,7 @@ Professor: Nick Feamster
 Teaching Assistant: Arpit Gupta
 '''
 
-IPDELSWITCHCONELFIREWALL = 3
+IPDELSWITCHCONELFIREWALL = 4
 
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
@@ -171,15 +171,14 @@ class Firewall (EventMixin):
 
 
     def _handle_PacketIn(self, event):
-        if self.firewall_switch_dpid != event.dpid:
-            return
-        eth = event.parsed # MAC
-        if eth.type != pkt.ethernet.IP_TYPE:
-            return
-        for policy in self.policies:
-            if self.match_policy(policy, eth):
-                log.debug("Packet from %s -> %s dropped with policy: %s",eth.next.srcip,eth.next.dstip,policy)
+        if self.firewall_switch_dpid -1 != event.dpid or self.firewall_switch_dpid + 1 == event.dpid:
+            eth = event.parsed # MAC
+            if eth.type != pkt.ethernet.IP_TYPE:
                 return
+            for policy in self.policies:
+                if self.match_policy(policy, eth):
+                    log.debug("Packet from %s -> %s dropped with policy: %s",eth.next.srcip,eth.next.dstip,policy)
+                    return
 
 
     def match_policy(self, match, eth):
