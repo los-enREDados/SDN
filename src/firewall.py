@@ -7,6 +7,8 @@ Professor: Nick Feamster
 Teaching Assistant: Arpit Gupta
 '''
 
+IPDELSWITCHCONELFIREWALL = 3
+
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
 from pox.lib.revent import *
@@ -55,7 +57,7 @@ POLICIES = "policies.json"
 class Firewall (EventMixin):
     
     def __init__ (self):
-        self.firewall_switch_dpid = 1
+        self.firewall_switch_dpid = IPDELSWITCHCONELFIREWALL
         self.policies = []
         self.read_policies(POLICIES)
         self.listenTo(core.openflow)

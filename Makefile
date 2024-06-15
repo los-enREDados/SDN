@@ -8,6 +8,7 @@ PORT            := 8080
 IP              := 10.0.0.1
 PROT            := TCP
 PROTFLAGS       :=
+SWITCHID        := 1
 
 # IPERFFLAGS      := 
 ifeq (${IPERF}, iperf)
@@ -27,7 +28,10 @@ install:
 	cd pox/ext/; ln -s ../../src/firewall.py || true
 	cd pox/ext/; ln -s ../../src/translator.py || true
 
-run:
+cambiarID:
+	sed -i 's/IPDELSWITCHCONELFIREWALL = [0-9]/IPDELSWITCHCONELFIREWALL = ${SWITCHID}/' src/firewall.py
+
+run: cambiarID
 	pox/pox.py firewall forwarding.l2_learning log.level --DEBUG samples.pretty_log
 
 
