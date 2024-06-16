@@ -1,3 +1,4 @@
+LATEX           := pdflatex -synctex=1 -file-line-error
 TOPOLOGY_FILE   := src/mytopo.py
 TOPOLOGY_NAME   := mytopo
 CONTROLLER_IP   := 127.0.0.1
@@ -24,6 +25,8 @@ else
 endif
 
 
+.PHONY: informe
+
 install:
 	cd pox/ext/; ln -s ../../src/firewall.py || true
 	cd pox/ext/; ln -s ../../src/translator.py || true
@@ -43,4 +46,7 @@ create-server:
 
 send-data:
 	${IPERF} -c ${IP} ${IPERFFLAGS} -p ${PORT} ${PROTFLAGS}
+
+informe:
+	$(LATEX) --shell-escape informe/informe.tex
 
