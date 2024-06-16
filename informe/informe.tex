@@ -71,7 +71,7 @@
 \tableofcontents
 \pagebreak
 
-\section{\texorpdfstring{\textbf{Introducción}}{Introducción}}\label{introducciuxf3n}
+\section{Introducción}\label{introducciuxf3n}
 
 En este trabajo practico se implemento la elaboracion de un SDN que, mediante OpenFlow (utilizando POX) implementa un Firewall sobre una red creada en Mininet.
 Para poder ver el programa en accion y acercar la simulacion a un caso de uso real,
@@ -80,10 +80,10 @@ una conexion entre clientes y servidores y ver el funcionamiento del Firewall en
 Para poder realmente ver esto, se utiiza Wireshark donde se observan los paquetes siendo enviados.
 
 
-\section{\texorpdfstring{\textbf{Hipótesis y suposiciones realizadas}}{Hipótesis y suposiciones realizadas}}\label{hipuxf3tesis-y-suposiciones-realizadas-wip}
+\section{Hipótesis y suposiciones realizadas - WIP}\label{hipuxf3tesis-y-suposiciones-realizadas-wip}
 
 \newpage
-\section{\texorpdfstring{\textbf{Herramientas utilizadas}}{Herramientas utilizadas}}\label{implementaciuxf3n-wip}
+\section{Herramientas utilizadas}\label{implementaciuxf3n-wip}
 A continuacion se detalla el uso de cada herramienta ya mencionada para elaborar el trabajo practico.
 
 \subsection{Mininet}\label{mininet}
@@ -92,7 +92,7 @@ Para utilizar Mininet, la topologia se define en mytopo.py. La misma recibe como
 parametro la cantidad de switches a utilizar.
 
 \begin{center}
-\includegraphics[scale=0.35]{mininet_topo.png}
+\includegraphics[scale=0.35]{images/mininet_topo.png}
 \end{center}
 
 Al correr el comando para levantar mininet, se establece la ip del controlador
@@ -100,24 +100,20 @@ que se va a utilizar. Esto es para que luego cuando corramos el controlador el m
 pueda modificar los switches de la topologia y maneje el control plane de la red
 de mininet.
 
-\subsection{POX WIPP}\label{pox}
-explicar como es que levanta y aplica las reglas, el formato de las reglas
+\subsection{POX - WIP}\label{pox}
+Para implementar el controlador con OpenFlow, se utilizo la biblioteca de POX.
+El controlador utiliza l2 learning para que los switches aprendan automaticamente
+a forwardear paquetes.
+Para el firewall...
+TODO: explicar como es que levanta y aplica las reglas, el formato de las reglas
 y como conecta a lo que este corriendo en mininet
 
+A continuacion se observa lo que el controlador loggea al iniciarse:
+\begin{center}
+ \includegraphics[scale=0.45]{images/pox_init.png}
+\end{center}
 
-Para utilizar OpenFlow, se usa POX.
-
-Explicar lo de l2 learning en POX
-
-Mostrar que los logs y wireshark muestran masomenos lo mismo
-
-
-Es importante destacar que estos switches no aprenden,
-por lo cual sin interacción con el controlador, nunca enviarán un paquete.
-Dado que OpenFlow se enfoca en poder controlar los flujos, los switches que manejan este protocolo pueden ejecutar
-múltiples acciones según si los paquetes coinciden con una entrada en la tabla de flujos. 
-
-\subsection{Wireshark \& iperf}\label{stop-and-wait}
+\subsection{Wireshark \& iperf - WIP IMAGENES}\label{stop-and-wait}
 
 Para comprobar el correcto funcionamiento de la red y del Firewall, se utiliza iperf para
 simular clientes y servidores, y Wireshark para ver los paquetes enviados.
@@ -132,7 +128,7 @@ IMAGEN REDES QUE VE WIRESHARK
 A continuacion se muestra el correcto funcionamiento del controlador, usando pingall dentro de mininet y escuchando con Wireshark.
 
 \begin{center}
-\includegraphics[scale=0.25]{mininet_pingall.png}
+    \includegraphics[scale=0.23]{images/mininet_pingall.png}
 \end{center}
 
 IMAGEN TRAZA WIRESHARK CON EL PINGALL DE MININET
@@ -146,7 +142,7 @@ clientes y servidores. En el ejemplo a continuacion tenemos al host h1 actuando 
 y al host h3 actuando como servidor, comunicandose por TCP.
 
 \begin{center}
-\includegraphics[scale=0.37]{mininet_iperf_basico.png}
+\includegraphics[scale=0.37]{images/mininet_iperf_basico.png}
 \end{center}
 
 IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
@@ -155,7 +151,7 @@ IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
 \end{center}
 
 \newpage
-\section{\texorpdfstring{\textbf{Resultados de simulaciones WIP FALTAN IMAGENES}}{Resultados de simulaciones}}\label{pruebas-wip}
+\section{\texorpdfstring{\textbf{Resultados de simulaciones - WIP IMAGENES}}{Resultados de simulaciones}}\label{pruebas-wip}
 
 \subsection{Puerto Destino 80}
 Simulacion para descartar todos los mensajes cuyo puerto destino sea 80.
@@ -243,7 +239,7 @@ Simulacion donde se eligen dos hosts cualquiera, y los mismos no pueden comunica
 \newpage
 \section{\texorpdfstring{\textbf{Preguntas a responder}}{Preguntas a responder}}\label{preguntas-a-responder}
 
-\subsection{\texorpdfstring{\textbf{¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?}}{1. ¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?}}\label{describa-la-arquitectura-cliente-servidor.}
+\subsection{1. ¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?}\label{describa-la-arquitectura-cliente-servidor.}
 
 La principal diferencia es que un switch opera en la capa 2 (enlace) y un router en la capa 3 (red).
 Los switches redireccionan utilzando la direccion MAC de los dispositivos, mientras que los
@@ -252,21 +248,19 @@ routers utilizan la IP.
 Lo que tienen en comun es que ambos funcionan para redireccionar paquetes y permitir
 que hosts en distintas partes del mundo puedan comunicarse entre si.
 
-\subsection{\texorpdfstring{\textbf{¿Cuál es la diferencia entre un Switch convencional y un Switch OpenFlow?}}{¿Cuál es la diferencia entre un Switch convencional y un Switch OpenFlow?}}\label{detalle-el-protocolo-de-aplicaciuxf3n-desarrollado-en-este-trabajo.}
+\subsection{¿Cuál es la diferencia entre un Switch convencional y un Switch OpenFlow?}\label{detalle-el-protocolo-de-aplicaciuxf3n-desarrollado-en-este-trabajo.}
 
 La diferencia mas importante entre un Switch convencional y uno OpenFlow es que el OpenFlow puede
 ser gestionado mediante software con un controlador centralizado. Lo que permite automatizar
 y agilizar el proceso.
-Los switches convencionales no tienen el plao de control desacoplados por lo que configurarlos
-requiere mas trabajo.
+Los switches convencionales no tienen el plano de control y el de datos desacoplados por lo que configurarlos requiere mas trabajo.
 
-\subsection{\texorpdfstring{\textbf{¿Se pueden reemplazar todos los routers de la Intenet por Switches OpenFlow? Piense en el escenario interASes para elaborar su respuesta}}{¿Se pueden reemplazar todos los routers de la Intenet por Switches OpenFlow? Piense en el escenario interASes para elaborar su respuesta}}\label{la-capa-de-transporte-del-stack-tcpip-ofrece-dos-protocolos-tcp-y-udp.-quuxe9-servicios-proveen-dichos-protocolos-cuuxe1les-son-sus-caracteruxedsticas-cuuxe1ndo-es-apropiado-utilizar-cada-uno}
+\subsection{¿Se pueden reemplazar todos los routers de la Intenet por Switches OpenFlow? Piense en el escenario interASes para elaborar su respuesta}\label{la-capa-de-transporte-del-stack-tcpip-ofrece-dos-protocolos-tcp-y-udp.-quuxe9-servicios-proveen-dichos-protocolos-cuuxe1les-son-sus-caracteruxedsticas-cuuxe1ndo-es-apropiado-utilizar-cada-uno}
 
-No es algo factible, ya que
+En principio se podria, mas alla de incompatbilidades que podrian llegar a ser parcheadas. Pero no es algo factible realmente. Surgirian muchisimos problemas de seguridad, de rendimiento, de interoperabilidad, etc. En el contexto de interASes, si bien al manejar todo desde una misma tecnologia podria llegar a facilitar, por ejemplo, la implementacion de politicas de trafico para mejonar la flexibilidad de la gestion del mismo, se presentaria un single point of failure ya que todo dependeria de OpenFlow. Una vulnerabilidad que se descrubra sobre el protocolo en si dejaria expuesto a todo el internet global. Y dentro de una red privada, si no se tienen routers no podriamos utilizar NATs de la forma actual, habria que implementarla con los Switches. 
 
-\section{\texorpdfstring{\textbf{Dificultades
-encontradas}}{Dificultades encontradas}}\label{dificultades-encontradas}
+\section{Dificultades encontradas - WIP}\label{dificultades-encontradas}
 
-\section{\texorpdfstring{\textbf{Conclusión}}{Conclusión}}\label{conclusiuxf3n-wip}
+\section{Conclusión - WIP}\label{conclusiuxf3n-wip}
 
 \end{document}

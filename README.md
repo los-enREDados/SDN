@@ -84,6 +84,11 @@ xterm h1 h2 h3
 > las ips por default son hn = 10.0.0.n como por ejemplo h1 = 10.0.0.1
 
 
+En caso de querer cambiar la cantidad de switches:
+```console
+sudo make mininet NSWITCHES=n
+```
+
 ### Probar conexiones
 Nota: Existe iperf 2.0 e iperf 3.0. Están disponibles las instrucciones para ambos.
 

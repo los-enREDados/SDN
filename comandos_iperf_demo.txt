@@ -1,0 +1,16 @@
+EJEMPLO 1: PUERTO 80
+
+iperf -c 10.0.0.3 -p 80
+
+iperf -s -p 80
+
+
+EJEMPLO 2: SOURCE HOST 1, PUERTO 5001, UDP
+
+iperf -c 10.0.0.3 -p 5001 -u
+
+iperf -s -p 5001 -u
+
+EJEMPLO 3: HOST1 y HOST3 no se comunican
+
+idem ejemplo 2

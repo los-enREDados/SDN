@@ -14,7 +14,7 @@ class MyTopo(Topo):
         h4 = self.addHost('h4')
 
         # Primer parte: h1 y h2 conectados al primer switch
-        s1 = self.addSwitch('mininet1')
+        s1 = self.addSwitch('s1')
         self.addLink(h1, s1)
         self.addLink(h2, s1)
         
