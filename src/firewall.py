@@ -7,7 +7,7 @@ Professor: Nick Feamster
 Teaching Assistant: Arpit Gupta
 '''
 
-IPDELSWITCHCONELFIREWALL = 4
+IPDELSWITCHCONELFIREWALL = 1
 
 from pox.core import core
 import pox.openflow.libopenflow_01 as of

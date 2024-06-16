@@ -3,6 +3,7 @@
 \usepackage{graphicx}          % Para graficos
 \usepackage{hyperref}          % Para meter hipervinculos
 \usepackage{soul}
+\usepackage{verbatim}
 
 \graphicspath{ {./informe/images/} }
 
@@ -81,7 +82,7 @@ Para poder realmente ver esto, se utiiza Wireshark donde se observan los paquete
 
 \section{\texorpdfstring{\textbf{Hipótesis y suposiciones realizadas}}{Hipótesis y suposiciones realizadas}}\label{hipuxf3tesis-y-suposiciones-realizadas-wip}
 
-
+\newpage
 \section{\texorpdfstring{\textbf{Herramientas utilizadas}}{Herramientas utilizadas}}\label{implementaciuxf3n-wip}
 A continuacion se detalla el uso de cada herramienta ya mencionada para elaborar el trabajo practico.
 
@@ -99,47 +100,22 @@ que se va a utilizar. Esto es para que luego cuando corramos el controlador el m
 pueda modificar los switches de la topologia y maneje el control plane de la red
 de mininet.
 
-\subsection{POX}\label{pox}
+\subsection{POX WIPP}\label{pox}
 explicar como es que levanta y aplica las reglas, el formato de las reglas
 y como conecta a lo que este corriendo en mininet
 
 
-emos hablando de OpenFlow y del controlador, pero no hemos mencionado aún como hacer uso del controlador, de
-manera tal de ejecutar rutinas. Aunque OpenFlow es el protocolo, por lo general los controladores corren aplicaciones las
-cuales les permiten hacer uso del protocolo. Estas aplicaciones cuentan con APIs disponibles en Java, Python y C.
-En la cátedra proponemos hacer uso de un controlador POX4, el cual tiene una API en Python
+Para utilizar OpenFlow, se usa POX.
+
+Explicar lo de l2 learning en POX
+
+Mostrar que los logs y wireshark muestran masomenos lo mismo
 
 
-
-Se debe considerar que el controlador a utilizar para esta simulación, si bien no posee una gran complejidad, debe
-presentar las siguientes características:
-Los switches deben aprender automáticamente la topología (l2 learning).
-Se deben agregar los logs necesarios al controlador para poder verificar su funcionamiento, y poder contrastarlo con
-wireshark.
-
-OpenFlow se propone poder reutilizar las memorias de los
-switches de manera inteligente. Como se mencionó anteriormente, hoy el ruteo en base a direcciones destino es insuficiente,
-entonces la idea es poder generar políticas en base a flujos, por lo cual cada una de las entradas en la tabla correspondería
-a un flujo. Entonces, la propuesta de OpenFlow consiste en 3 partes:
-1. Una tabla de flujos
-2. Un canal encriptado de comunicaciones hacia un controlador
-3. El protocolo OpenFlow
-Tanto routers como switches tienen su arquitectura dividida en dos: el plano de control y el plano de datos. En el
-plano de control operan las decisiones de como administrar el dispositivo, las cuales corren en software. En cambio en el
-plano de datos, se administra la recepción y envío de paquetes y opera en el plano de hardware. La idea de OpenFlow es
-crear un protocolo de comunicación para poder controlar el plano de control, que eventualmente gestiona las entradas en
-las tablas de ruteo del plano de datos.
-Sumado al concepto de una tabla de ruteo manipulable surge la idea de un controlador, un elemento externo capaz de
-configurar la tabla de flujos, tal como se lo muestra en la Figura 1. La relación entre el switch y el controlador puede ofrecer
-dos dinámicas: Configuración inicial, donde el controlador asigna funciones una única vez cuando se instala el switch, o
-dinámica, en donde constantemente se definen nuevas políticas. Es importante destacar que estos switches no aprenden,
+Es importante destacar que estos switches no aprenden,
 por lo cual sin interacción con el controlador, nunca enviarán un paquete.
 Dado que OpenFlow se enfoca en poder controlar los flujos, los switches que manejan este protocolo pueden ejecutar
-múltiples acciones según si los paquetes coinciden con una entrada en la tabla de flujos. Es necesario destacar, que las
-tablas de flujos admiten wildcards. Por ejemplo en las acciones por flujo se pueden tomar políticas de ingeniería de tráfico,
-reescribir campos de la cabecera si fuera necesario (NAT) o descartar paquetes en caso de un ataque (Blackholing). Para
-esto los switches cuentan con hardware específico para la lectura de 10 campos, los cuales aparecen en la Figura 2, por
-medio de los cuales se pueden individualizar un flujo
+múltiples acciones según si los paquetes coinciden con una entrada en la tabla de flujos. 
 
 \subsection{Wireshark \& iperf}\label{stop-and-wait}
 
@@ -155,14 +131,13 @@ IMAGEN REDES QUE VE WIRESHARK
 
 A continuacion se muestra el correcto funcionamiento del controlador, usando pingall dentro de mininet y escuchando con Wireshark.
 
-IMAGEN SCREEN A LA TERMINAL DE MININET HACIENDO PINGALL Y VIENOD QUE LLEGA TODO A TODO
 \begin{center}
-\includegraphics[scale=0.35]{images/mininet_pingall.png}
+\includegraphics[scale=0.25]{images/mininet_pingall.png}
 \end{center}
 
 IMAGEN TRAZA WIRESHARK CON EL PINGALL DE MININET
 \begin{center}
-\includegraphics[scale=0.35]{images/wireshark_pingall.png}
+\includegraphics[scale=0.5]{images/wireshark_pingall.png}
 \end{center}
 
 
@@ -170,9 +145,8 @@ Para poder comprobar que no solo funciona con ICMP utilizamos iperf. Con iperf s
 clientes y servidores. En el ejemplo a continuacion tenemos al host h1 actuando como cliente
 y al host h3 actuando como servidor, comunicandose por TCP.
 
-IMAGEN SCREEN A LA TERMINAL DE MININET USANDO IPERF PARA SETEAR CLIETNE H1 Y SERVER H3
 \begin{center}
-\includegraphics[scale=0.35]{images/mininet_iperf_basico.png}
+\includegraphics[scale=0.37]{images/mininet_iperf_basico.png}
 \end{center}
 
 IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
@@ -180,8 +154,8 @@ IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
 \includegraphics[scale=0.35]{images/wireshark_iperf_basico.png}
 \end{center}
 
-
-\section{\texorpdfstring{\textbf{Resultados de simulaciones}}{Resultados de simulaciones}}\label{pruebas-wip}
+\newpage
+\section{\texorpdfstring{\textbf{Resultados de simulaciones WIP FALTAN IMAGENES}}{Resultados de simulaciones}}\label{pruebas-wip}
 
 \subsection{Puerto Destino 80}
 Simulacion para descartar todos los mensajes cuyo puerto destino sea 80.
@@ -190,6 +164,17 @@ Simulacion para descartar todos los mensajes cuyo puerto destino sea 80.
 \begin{center}
 \includegraphics[scale=0.35]{UploadJoseph.jpg(6,5MB)conStopWait}
 \end{center}
+
+\begin{verbatim}
+{
+    "policies":[
+        {
+            "dst_port": "80"
+        }
+]
+}
+\end{verbatim}
+
 
 \subsubsection{Wireshark}
 \begin{center}
@@ -206,9 +191,18 @@ Simulacion para descartar todos los mensajes cuyo puerto destino sea 80.
 Simulacion para descartar todos los mensajes que provengan del host 1, tengan como puerto destino el 5001, y esten utilizando el protocolo UDP.
 
 \subsubsection{Reglas}
-\begin{center}
-\includegraphics[scale=0.35]{UploadJoseph.jpg(6,5MB)conStopWait}
-\end{center}
+
+\begin{verbatim}
+{
+    "policies":[
+    {
+        "src_ip": "10.0.0.1",
+        "dst_port": 5001,
+        "protocol": "UDP"
+    }
+]
+}
+\end{verbatim}
 
 \subsubsection{Wireshark}
 \begin{center}
@@ -224,9 +218,17 @@ Simulacion para descartar todos los mensajes que provengan del host 1, tengan co
 Simulacion donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma.
 
 \subsubsection{Reglas}
-\begin{center}
-\includegraphics[scale=0.35]{UploadJoseph.jpg(6,5MB)conStopWait}
-\end{center}
+
+\begin{verbatim}
+{
+    "policies":[
+    {
+        "banned_tuples": ["10.0.0.1","10.0.0.3"]
+    }
+]
+}
+\end{verbatim}
+
 
 \subsubsection{Wireshark}
 \begin{center}
@@ -238,7 +240,7 @@ Simulacion donde se eligen dos hosts cualquiera, y los mismos no pueden comunica
 \includegraphics[scale=0.35]{DownloadGrupo12.png(1,2MB)conStopWait}
 \end{center}
 
-
+\newpage
 \section{\texorpdfstring{\textbf{Preguntas a responder}}{Preguntas a responder}}\label{preguntas-a-responder}
 
 \subsection{\texorpdfstring{\textbf{¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?}}{1. ¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?}}\label{describa-la-arquitectura-cliente-servidor.}
