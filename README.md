@@ -1,59 +1,55 @@
 # SDN
 ## Instalar
-Una vez clonado se tiene que correr el siguiente comando:
+Una vez clonado, se debe ejecutar el siguiente comando:
 ```console
 git submodule update --init --recursive
 ```
-Luego para el setup correr:
+Luego, para la configuración inicial, ejecutar:
 ```console
-make install 
+make install
 ```
 
-## Ejecuccion de firewall
-Para abrir pox y levantar el firewall correr:
+## Ejecución del firewall
+Para abrir POX y levantar el firewall, ejecutar:
 ```console
 make run
 ```
 
-### Modificacion de policies
-Las policies se encuentran en el archivo `policies.json` y tienen el siguiente formato:
+### Modificación de políticas
+Las políticas se encuentran en el archivo `policies.json` y tienen el siguiente formato:
 ```json
-    {
-        "src_ip": "0.0.0.0",
-        "dst_ip": "0.0.0.0",
-        "src_port": 0,
-        "dst_port": 0,
-        "protocol": "protocol",
-        "banned_tuples": ["0.0.0.0","0.0.0.0"]
-    }
-
+{
+    "src_ip": "0.0.0.0",
+    "dst_ip": "0.0.0.0",
+    "src_port": 0,
+    "dst_port": 0,
+    "protocol": "protocol",
+    "banned_tuples": ["0.0.0.0","0.0.0.0"]
+}
 ```
-Estas se pueden crear complejas como por ejemplo:
+Estas se pueden configurar de manera compleja, por ejemplo:
 ```json
-    {
-        "src_ip": "10.0.0.1",
-        "src_port": 80,
-        "protocol": "TCP"
-    }
-
+{
+    "src_ip": "10.0.0.1",
+    "src_port": 80,
+    "protocol": "TCP"
+}
 ```
-Que bloquearia los paquetes provenientes del la direccion 10.0.0.1 envias utilizando el protocolo TCP en el puerto 80.
-
+Esto bloquearía los paquetes provenientes de la dirección 10.0.0.1 utilizando el protocolo TCP en el puerto 80.
 
 #### Aclaraciones
-- utilizar `banned_tuples` sin ningun otra condicion. Esto es requisito ya que poner otras condiciones en banned_tuples es inecesario ya que el proposito es bloquear todo tipo de comunicacion entre dos hosts
-
-- Considerar que si se quiere bloquear un puerto sea de src tiene que seguir dos formatos:
+- Utilizar `banned_tuples` sin ninguna otra condición. Esto es un requisito, ya que añadir otras condiciones en `banned_tuples` es innecesario dado que el propósito es bloquear toda comunicación entre dos hosts.
+- Tener en cuenta que si se desea bloquear un puerto, si es de origen (`src`), debe seguir dos formatos:
     <ol>
-    <li>  <b>Sin especificar protocolo:</b> esto bloquea el puerto deseado en los protocolos UDP o TCP   
-    <li>  <b>Especificando el protocolo:</b> esto bloquea solamente el puerto en el protocolo especificado. Notar que este puerto tiene que ser TCP o UDP para que tenga sentido logico. 
+    <li> <b>Sin especificar protocolo:</b> esto bloquea el puerto deseado en los protocolos UDP o TCP.</li>
+    <li> <b>Especificando el protocolo:</b> esto bloquea únicamente el puerto en el protocolo especificado. Notar que este puerto tiene que ser TCP o UDP para que tenga sentido lógico.</li>
     </ol>
 
-## Probar con mininet
-### Prender OpenVS switch
-Mininet necesita que el daemon de OpenVS switch esté encendido para funcionar.
-En caso de que no esté encendido, se tiene que encender.
-#### En systemdD
+## Probar con Mininet
+### Encender OpenvSwitch
+Mininet requiere que el daemon de OpenvSwitch esté activo para funcionar. Si no está activo, debe encenderse.
+
+#### En systemd
 ```console
 systemctl start ovsdb-server
 ```
@@ -62,54 +58,53 @@ systemctl start ovsdb-server
 ```console
 rc-service ovsdb-server start
 ```
-Y despues:
+Y luego:
 ```console
 rc-service ovs-vswitchd start
 ```
 
-### Correr mininet
-Para probar abrir mininet (requiere permisos de root):
+### Ejecutar Mininet
+Para abrir Mininet (requiere permisos de root):
 
 ```console
 sudo make mininet
 ```
 
-Luego dentro de mininet abrir las terminales (utilizando xterm) de los hosts correspondientes
-
+Dentro de Mininet, abrir las terminales (usando xterm) de los hosts correspondientes:
 
 ```console
 xterm h1 h2 h3
 ```
 
-> las ips por default son hn = 10.0.0.n como por ejemplo h1 = 10.0.0.1
+> Las IPs por defecto son de la forma hn = 10.0.0.n, por ejemplo h1 = 10.0.0.1.
 
+Si se desea cambiar la cantidad de switches:
 
-En caso de querer cambiar la cantidad de switches:
 ```console
 sudo make mininet NSWITCHES=n
 ```
 
 ### Probar conexiones
-Nota: Existe iperf 2.0 e iperf 3.0. Están disponibles las instrucciones para ambos.
+Nota: Existen iperf 2.0 e iperf 3.0. Las instrucciones están disponibles para ambos.
 
-#### Server
+#### Servidor
 Iperf 2.0:
 ```console
-iperf -s -p <port> 
+iperf -s -p <port>
 ```
 Iperf 3.0:
 ```console
-iperf3 -s -p <port> 
+iperf3 -s -p <port>
 ```
->Simula un servidor el cual acepta conexiones. Agregar la flag `-u` al final para testear con UDP enves de TCP
+> Simula un servidor que acepta conexiones. Agregar la bandera `-u` al final para probar con UDP en lugar de TCP.
 
 #### Cliente
-Iperf 2.0
+Iperf 2.0:
 ```console
-iperf -c <ip_addr> -e -p <port> 
+iperf -c <ip_addr> -e -p <port>
 ```
-Iperf 3.0
+Iperf 3.0:
 ```console
 iperf3 -c <ip_addr> -p <port>
 ```
-> Simula un cliente el cual se conecta y intenta enviar paquetes al servidor hosteado en la (ip,port) correspondiente. Agregar la flag `-u` para testear con UDP enves de TCP.
+> Simula un cliente que se conecta e intenta enviar paquetes al servidor alojado en la (ip, puerto) correspondiente. Agregar la bandera `-u` para probar con UDP en lugar de TCP.
