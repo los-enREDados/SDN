@@ -1,4 +1,4 @@
-LATEX           := pdflatex -synctex=1 -file-line-error
+LATEX           := pdflatex --synctex=1 -file-line-error
 TOPOLOGY_FILE   := src/mytopo.py
 TOPOLOGY_NAME   := mytopo
 CONTROLLER_IP   := 127.0.0.1
@@ -48,5 +48,5 @@ send-data:
 	${IPERF} -c ${IP} ${IPERFFLAGS} -p ${PORT} ${PROTFLAGS}
 
 informe:
-	$(LATEX) --shell-escape informe/informe.tex
+	$(LATEX) --shell-escape  informe/informe.tex
 

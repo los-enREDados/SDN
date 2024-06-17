@@ -1,9 +1,10 @@
 \documentclass{article}
 
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{soul}
-\usepackage{verbatim}
+\usepackage{minted}            % Para poner codigo y que quede con sintaxis fachera
+\usepackage{graphicx}          % Para graficos
+\usepackage{hyperref}          % Para meter hipervinculos
+% \usepackage{soul}
+% \usepackage{verbatim}
 
 \graphicspath{ {./informe/images/} }
 
@@ -28,7 +29,7 @@
 
   \vspace{0.8cm}
   \begin{center}
-    \includegraphics[scale=0.8]{images/Logo-fiuba.png}
+    \includegraphics[scale=0.8]{Logo-fiuba.png}
   \end{center}
 
   \vspace{1.4cm}
@@ -87,7 +88,7 @@ A continuación se detalla el uso de cada herramienta mencionada para elaborar e
 Para utilizar Mininet, la topología se define en \texttt{mytopo.py}. La misma recibe como parámetro la cantidad de switches a utilizar.
 
 \begin{center}
-\includegraphics[scale=0.35]{images/mininet_topo.png}
+\includegraphics[scale=0.35]{mininet_topo.png}
 \end{center}
 
 Al correr el comando para levantar Mininet, se establece la IP del controlador que se va a utilizar. Esto es para que, luego, cuando corramos el controlador, el mismo pueda modificar los switches de la topología y maneje el control plane de la red de Mininet.
@@ -100,7 +101,7 @@ TODO: Explicar cómo se levanta y aplica las reglas, el formato de las reglas y 
 
 A continuación se observa lo que el controlador registra al iniciarse:
 \begin{center}
- \includegraphics[scale=0.45]{images/pox_init.png}
+ \includegraphics[scale=0.45]{pox_init.png}
 \end{center}
 
 \subsection{Wireshark \& iperf - WIP IMAGENES}\label{wireshark-iperf}
@@ -117,7 +118,7 @@ IMAGEN REDES QUE VE WIRESHARK
 A continuación se muestra el correcto funcionamiento del controlador, usando \texttt{pingall} dentro de Mininet y escuchando con Wireshark.
 
 \begin{center}
-    \includegraphics[scale=0.23]{images/mininet_pingall.png}
+    \includegraphics[scale=0.23]{mininet_pingall.png}
 \end{center}
 
 IMAGEN TRAZA WIRESHARK CON EL PINGALL DE MININET
@@ -128,7 +129,7 @@ IMAGEN TRAZA WIRESHARK CON EL PINGALL DE MININET
 Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simulamos clientes y servidores. En el ejemplo a continuación, el host h1 actúa como cliente y el host h3 actúa como servidor, comunicándose por TCP.
 
 \begin{center}
-\includegraphics[scale=0.37]{images/mininet_iperf_basico.png}
+\includegraphics[scale=0.37]{mininet_iperf_basico.png}
 \end{center}
 
 IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
@@ -143,7 +144,7 @@ IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
 Simulación para descartar todos los mensajes cuyo puerto destino sea 80.
 
 \subsubsection{Reglas}
-\begin{verbatim}
+\begin{minted}{js}
 {
     "policies":[
         {
@@ -151,7 +152,7 @@ Simulación para descartar todos los mensajes cuyo puerto destino sea 80.
         }
     ]
 }
-\end{verbatim}
+\end{minted}
 
 \subsubsection{Wireshark}
 \begin{center}
@@ -167,7 +168,7 @@ Simulación para descartar todos los mensajes cuyo puerto destino sea 80.
 Simulación para descartar todos los mensajes que provengan del host 1, tengan como puerto destino el 5001, y utilicen el protocolo UDP.
 
 \subsubsection{Reglas}
-\begin{verbatim}
+\begin{minted}{js}
 {
     "policies":[
         {
@@ -177,7 +178,7 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
         }
     ]
 }
-\end{verbatim}
+\end{minted}
 
 \subsubsection{Wireshark}
 \begin{center}
@@ -193,7 +194,7 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma.
 
 \subsubsection{Reglas}
-\begin{verbatim}
+\begin{minted}{js}
 {
     "policies":[
         {
@@ -201,7 +202,7 @@ Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunic
         }
     ]
 }
-\end{verbatim}
+\end{minted}
 
 \subsubsection{Wireshark}
 \begin{center}
