@@ -145,7 +145,7 @@ Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simula
 \section{Resultados de simulaciones - WIP IMAGENES}\label{pruebas-wip}
 
 \subsection{Puerto Destino 80}
-Simulación para descartar todos los mensajes cuyo puerto destino sea 80.
+Simulación para descartar todos los mensajes cuyo puerto destino sea 80. Se utilizan los hosts 1 y 4. 
 
 \subsubsection{Reglas}
 \begin{minted}{js}
@@ -158,19 +158,28 @@ Simulación para descartar todos los mensajes cuyo puerto destino sea 80.
 }
 \end{minted}
 
-\subsubsection{Wireshark}
+\subsection{Iperf}
 \begin{center}
-% \includegraphics[scale=0.35]{wireshark_80.png}
+\includegraphics[scale=0.35]{iperf_port_80.png}
+\captionof{figure}{Iperf cliente y servidor TCP que no se pueden comunicar por el puerto 80}
 \end{center}
 
+\subsubsection{Wireshark}
+\begin{center}
+\includegraphics[scale=0.35]{bloq_80_port.png}
+\captionof{figure}{Wireshark con puerto 80 bloqueado mostrando que no llega el SYN} 
+\end{center}
+
+
+
 \subsubsection{Logs del controlador}
-% \begin{center}
-%   \inputminted{text}{logs/Banned_Tuple_Log.txt}
-% \end{center}
+\begin{center}
+  \inputminted[fontsize=\footnotesize]{text}{informe/logs/Port_80_Log.txt}
+\end{center}
 
 \subsection{Host 1, Puerto 5001 y UDP}
 Simulación para descartar todos los mensajes que provengan del host 1, tengan como puerto destino el 5001, y utilicen el protocolo UDP.
-
+% WARNING: Poner todas las tildes. Como si fuesemos estudiantes de lingüistica (solo saben poner tildes)
 \subsubsection{Reglas}
 \begin{minted}{js}
 {
@@ -195,7 +204,7 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 \end{center}
 
 \subsection{Dos hosts no se comunican entre sí}
-Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma. Utilizamos el comando pingAll de mininet para demostrar que no se pueden comunicar.
+Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma. Utilizamos el comando pingAll de mininet para demostrar que no se pueden comunicar. Se utilizan los hosts 1 y 3.
 
 \subsubsection{Reglas}
 \begin{minted}{js}
@@ -211,39 +220,37 @@ Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunic
 \subsubsection{Wireshark}
 \begin{center}
 \includegraphics[scale=0.35]{Banned_Tuple_WS.png}
+\captionof{figure}{Wireshark con Banned Tuple}
 \end{center}
 
 
 \subsubsection{Logs del controlador}
 \begin{center}
-  \inputminted[fontsize=\default]{text}{informe/logs/Banned_Tuple_Log.txt}
+  \inputminted[fontsize=\footnotesize]{text}{informe/logs/Banned_Tuple_Log.txt}
 \end{center}
 
 
 \subsection{Mininet PingAll}
 \begin{center}
-\includegraphics[scale=0.35]{Mininet_Banned_Tupled.png}
+  \includegraphics[scale=0.35]{Mininet_Banned_Tupled.png}
+  \captionof{figure}{Mininet con Banned Tuple}
 \end{center}
 
-\newpage
 \section{Preguntas a responder}\label{preguntas-a-responder}
 
 \subsection{¿Cuál es la diferencia entre un Switch y un router? ¿Qué tienen en común?}
+Un switch y un router son dispositivos de red que permiten la comunicación entre múltiples dispositivos, pero operan en diferentes capas. Un switch trabaja en la capa 2 (enlace) y utiliza direcciones MAC para redirigir paquetes, facilitando la comunicación entre dispositivos dentro de una misma red local. Por otro lado, un router opera en la capa 3 (red) y utiliza direcciones IP para conectar múltiples redes simultáneamente, permitiendo la comunicación entre dispositivos en distintas redes. Ambos dispositivos toman los paquetes recibidos por sus puertos de entrada y los envían por los puertos de salida adecuados para alcanzar sus destinos finales.
 
-La principal diferencia es que un switch opera en la capa 2 (enlace) y un router en la capa 3 (red). Los switches redireccionan utilizando la dirección MAC de los dispositivos, mientras que los routers utilizan la IP.
-
-Lo que tienen en común es que ambos funcionan para redireccionar paquetes y permitir que hosts en distintas partes del mundo puedan comunicarse entre sí.
 
 \subsection{¿Cuál es la diferencia entre un Switch convencional y un Switch OpenFlow?}
-
 La diferencia más importante entre un Switch convencional y uno OpenFlow es que el OpenFlow puede ser gestionado mediante software con un controlador centralizado, lo que permite automatizar y agilizar el proceso. Los switches convencionales no tienen el plano de control y el de datos desacoplados, por lo que configurarlos requiere más trabajo.
 
+
 \subsection{¿Se pueden reemplazar todos los routers de la Internet por Switches OpenFlow? Piense en el escenario interASes para elaborar su respuesta.}
+En principio, se podría integrar switches OpenFlow en una red, pero no es algo realmente factible debido a problemas de seguridad, rendimiento e interoperabilidad. En el contexto de interASes, manejar todo desde una única tecnología como OpenFlow podría facilitar la implementación de políticas de tráfico, pero crearía un single point of failure. Una vulnerabilidad en el protocolo OpenFlow expondría todo el Internet global. Además, sin routers, la implementación de NATs sería problemática. Los routers tradicionales, que implementan funciones en hardware, son más eficientes y rápidos, mientras que una red basada únicamente en switches OpenFlow estaría más congestionada. Además, los switches OpenFlow, como el POX, no implementan protocolos cruciales como BGP y OSPF, haciendo imposible la gestión completa de direcciones en una red global solo con switches OpenFlow.
 
-En principio, se podría, más allá de incompatibilidades que podrían llegar a ser parcheadas. Pero no es algo factible realmente. Surgirían muchísimos problemas de seguridad, rendimiento, interoperabilidad, etc. En el contexto de interASes, si bien al manejar todo desde una misma tecnología podría facilitar, por ejemplo, la implementación de políticas de tráfico para mejorar la flexibilidad de la gestión del mismo, se presentaría un single point of failure ya que todo dependería de OpenFlow. Una vulnerabilidad que se descubra sobre el protocolo en sí dejaría expuesto a todo el Internet global. Y dentro de una red privada, si no se tienen routers no podríamos utilizar NATs de la forma actual, habría que implementarla con los Switches. 
 
-\section{Dificultades encontradas - WIP}\label{dificultades-encontradas}
-
-\section{Conclusión - WIP}\label{conclusion-wip}
+\section{Conclusion}
+Gracias a la tecnologia de Openflow; pudimos codificar un firewall dinamico. Este nos permitio describir un set de reglas para filtrar paquetes y luego instalar dichas reglas de forma remota a un switch.
 
 \end{document}
