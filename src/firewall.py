@@ -19,36 +19,11 @@ from translator import protToNumber
 import pox.lib.packet as pkt
 import os
 import json
-''' Add your imports here ... '''
-
 
 
 log = core.getLogger()
 policyFile = "%s/pox/pox/misc/firewall-policies.csv" % os.environ[ 'HOME' ]
 
-''' Add your global variables here ... '''
-
-"""
-Cosas que se pueden bloquear:
-- Puerto destino y origen
-- Numero de host origen y destino
-- Protocolo
-- Bannear hosts completamente (no se puede comunicar entre ellos)
-
-Estructura json entonces:
-{
-    "rules": [
-        {
-            "src_ip": "
-            "dst_ip": "
-            "src_port": "
-            "dst_port": "
-            "protocol": "
-            "banned_tuples": []
-        }
-}
-
-"""
 
 POLICIES = "policies.json"
 
@@ -151,22 +126,18 @@ class Firewall (EventMixin):
             matchPair.tp_src = int(policy["src_port"])
         else:
             matchPair.tp_dst = int(policy["dst_port"])
-        # matches.append(matchPair)
         match.nw_proto = protToNumber["TCP"]
         return match, matchPair
         
     def _handle_ConnectionUp(self, event):
-        ''' Add your logic here ... '''
         if self.firewall_switch_dpid != event.dpid:
             return
         
         log.debug("Firewall rules installed on %s", dpidToStr(event.dpid))
 
-        # High priority rules to drop packets based on policies
         for policy in self.policies:
             log.debug("Installing policy: %s", policy)
             flow_mod = of.ofp_flow_mod(match=policy)
-            # No action means drop the packet
             event.connection.send(flow_mod)
 
 
