@@ -36,6 +36,7 @@ cambiarID:
 	sed -i 's/IPDELSWITCHCONELFIREWALL = [0-9]/IPDELSWITCHCONELFIREWALL = ${SWITCHID}/' src/firewall.py
 
 run: cambiarID
+	echo " " > log.txt
 	pox/pox.py firewall forwarding.l2_learning log.level --DEBUG samples.pretty_log log --file=${LOG_FILE}
 
 
