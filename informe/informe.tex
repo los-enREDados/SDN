@@ -202,11 +202,14 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 \subsubsection{Wireshark}
 \begin{center}
 \includegraphics[scale=0.2]{Multi_Rules_WS_.png}
+\captionof{figure}{Logo de wireshark con el switch 2 (izquierda) y switch 4 (derecha) mostrando que los paquetes UDP de h1 no llegan a h4 luego despues de pasar el firewall en switch 3}
+
 \end{center}
 
 \subsubsection{Logs del controlador}
 \begin{center}
   \inputminted[fontsize=\footnotesize]{text}{informe/logs/Multi_Rules_WS.txt}
+  
 \end{center}
 
 \subsection{Dos hosts no se comunican entre sí}
