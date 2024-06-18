@@ -1,0 +1,166 @@
+DEBUG:core:POX 0.6.0 (fangtooth) going up...
+DEBUG:core:Running on CPython (2.7.18/Oct 15 2023 16:43:11)
+DEBUG:core:Platform is Linux-5.15.0-112-generic-x86_64-with-LinuxMint-21-vanessa
+INFO:core:POX 0.6.0 (fangtooth) is up.
+DEBUG:openflow.of_01:Listening on 0.0.0.0:6633
+INFO:openflow.of_01:[00-00-00-00-00-03 3] connected
+DEBUG:firewall:Firewall rules installed on 00-00-00-00-00-03
+DEBUG:firewall:Installing policy: ofp_match
+  dl_type: 0x800
+  nw_src: 10.0.0.1
+  nw_dst: 10.0.0.3
+DEBUG:firewall:Installing policy: ofp_match
+  dl_type: 0x800
+  nw_src: 10.0.0.3
+  nw_dst: 10.0.0.1
+DEBUG:firewall:Installing policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:firewall:Installing policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 6
+  tp_dst: 80
+DEBUG:firewall:Installing policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  tp_dst: 80
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-03 3]
+INFO:openflow.of_01:[00-00-00-00-00-01 2] connected
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-01 2]
+INFO:openflow.of_01:[00-00-00-00-00-02 4] connected
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-02 4]
+INFO:openflow.of_01:[00-00-00-00-00-04 1] connected
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-04 1]
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.3 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_src: 10.0.0.1
+  nw_dst: 10.0.0.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> a6:54:2f:87:1e:71.3
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.3 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_src: 10.0.0.1
+  nw_dst: 10.0.0.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> a6:54:2f:87:1e:71.3
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.2
+DEBUG:firewall:Packet from 10.0.0.3 -> 10.0.0.1 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_src: 10.0.0.3
+  nw_dst: 10.0.0.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> a6:54:2f:87:1e:71.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> a6:54:2f:87:1e:71.3
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> a6:54:2f:87:1e:71.3
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 16:1f:83:b4:e5:53.1
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 16:1f:83:b4:e5:53.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.2 -> 42:42:63:8b:d0:39.1
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> 42:42:63:8b:d0:39.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.2 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.2
+DEBUG:forwarding.l2_learning:installing flow for 42:42:63:8b:d0:39.1 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 86:01:c4:0d:11:a0.3
+DEBUG:forwarding.l2_learning:installing flow for 86:01:c4:0d:11:a0.3 -> a6:54:2f:87:1e:71.2
+DEBUG:forwarding.l2_learning:installing flow for a6:54:2f:87:1e:71.2 -> 86:01:c4:0d:11:a0.3
+INFO:openflow.of_01:[00-00-00-00-00-04 1] closed
+INFO:openflow.of_01:[00-00-00-00-00-01 2] closed
+INFO:openflow.of_01:[00-00-00-00-00-03 3] closed
+INFO:openflow.of_01:[00-00-00-00-00-02 4] closed
+INFO:core:Going down...
+INFO:core:Down.

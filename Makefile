@@ -3,13 +3,14 @@ TOPOLOGY_FILE   := src/mytopo.py
 TOPOLOGY_NAME   := mytopo
 CONTROLLER_IP   := 127.0.0.1
 CONTROLLER_PORT := 6633
-NSWITCHES       := 7
+NSWITCHES       := 4
 IPERF           := iperf3
 PORT            := 8080
 IP              := 10.0.0.1
 PROT            := TCP
 PROTFLAGS       :=
-SWITCHID        := 1
+SWITCHID        := 2
+LOG_FILE = log.txt
 
 # IPERFFLAGS      := 
 ifeq (${IPERF}, iperf)
@@ -35,7 +36,7 @@ cambiarID:
 	sed -i 's/IPDELSWITCHCONELFIREWALL = [0-9]/IPDELSWITCHCONELFIREWALL = ${SWITCHID}/' src/firewall.py
 
 run: cambiarID
-	pox/pox.py firewall forwarding.l2_learning log.level --DEBUG samples.pretty_log
+	pox/pox.py firewall forwarding.l2_learning log.level --DEBUG samples.pretty_log log --file=${LOG_FILE}
 
 
 mininet:

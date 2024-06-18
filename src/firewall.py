@@ -1,13 +1,4 @@
-'''
-Coursera:
-- Software Defined Networking (SDN) course
--- Programming Assignment: Layer-2 Firewall Application
-
-Professor: Nick Feamster
-Teaching Assistant: Arpit Gupta
-'''
-
-IPDELSWITCHCONELFIREWALL = 1
+IPDELSWITCHCONELFIREWALL = 3
 
 from pox.core import core
 import pox.openflow.libopenflow_01 as of

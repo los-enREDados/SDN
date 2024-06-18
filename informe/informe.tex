@@ -3,6 +3,7 @@
 \usepackage{minted}            % Para poner codigo y que quede con sintaxis fachera
 \usepackage{graphicx}          % Para graficos
 \usepackage{hyperref}          % Para meter hipervinculos
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 % \usepackage{soul}
 % \usepackage{verbatim}
 
@@ -11,7 +12,7 @@
 \begin{document}
 
 \begin{titlepage}
-  \vspace*{1cm}
+  \vspace*{0.5cm}
 
   \begin{center}
     {\Huge Trabajo Práctico 2: Software-Defined Networks}
@@ -77,9 +78,6 @@
 
 En este trabajo práctico se implementó un SDN que, mediante OpenFlow (utilizando POX), implementa un Firewall sobre una red creada en Mininet. Para ver el programa en acción y acercar la simulación a un caso de uso real, dentro de los hosts de la red de Mininet se utiliza iperf para establecer fácilmente una conexión entre clientes y servidores y observar el funcionamiento del Firewall en acción. Para comprobar esto, se utiliza Wireshark, donde se observan los paquetes siendo enviados.
 
-\section{Hipótesis y suposiciones realizadas - WIP}\label{hipotesis-y-suposiciones-realizadas-wip}
-
-\newpage
 \section{Herramientas utilizadas}\label{implementacion-wip}
 A continuación se detalla el uso de cada herramienta mencionada para elaborar el trabajo práctico.
 
@@ -96,24 +94,23 @@ Al correr el comando para levantar Mininet, se establece la IP del controlador q
 \subsection{POX - WIP}\label{pox}
 Para implementar el controlador con OpenFlow, se utilizó la biblioteca POX. El controlador utiliza L2 learning para que los switches aprendan automáticamente a reenviar paquetes.
 
-Para el firewall...
-TODO: Explicar cómo se levanta y aplica las reglas, el formato de las reglas y cómo se conecta a lo que esté corriendo en Mininet.
+Para el firewall implementamos el metodo \texttt{\_handle\_ConnectionUp} que se encarga de instalar las reglas en el switch designado como firewall. Para esto, se lee el archivo \texttt{policies.json} que contiene las reglas a aplicar y se las traduce a objetos del tipo \texttt{ofp\_match}. Este objeto es un conjunto de criterios que se utilizan para identificar flujos de red en el contexto de utilizacion de OpenFlow. 
+
+Luego entonces cuando un paquete llega al switch, se verifica si cumple con alguna de las reglas del firewall. En caso de cumplir con alguna regla, se descarta el paquete. En caso contrario, se lo deja pasar. 
+
+\subsubsection{POX en ejecucion}
 
 A continuación se observa lo que el controlador registra al iniciarse:
 \begin{center}
  \includegraphics[scale=0.45]{pox_init.png}
+ \captionof{figure}{Pox mostrando las reglas que instalo}
 \end{center}
 
-\subsection{Wireshark \& iperf - WIP IMAGENES}\label{wireshark-iperf}
+\subsection{Wireshark \& iperf}\label{wireshark-iperf}
 
-Para comprobar el correcto funcionamiento de la red y del Firewall, se utiliza iperf para simular clientes y servidores, y Wireshark para ver los paquetes enviados.
+Para comprobar el correcto funcionamiento de la red y del Firewall, se utiliza iperf para simular clientes y servidores sin tener que configurarlos manualmente en los hosts de Mininet. 
 
-Al tener abierta la red de Mininet, Wireshark la detecta como opción para poder escuchar.
-
-IMAGEN REDES QUE VE WIRESHARK
-\begin{center}
-% \includegraphics[scale=0.35]{wireshark_redes.png}
-\end{center}
+Por otro lado utilizamos Wireshark para escuchar los paquetes que se envían en la red y verificar que el Firewall está funcionando correctamente.
 
 A continuación se muestra el correcto funcionamiento del controlador, usando \texttt{pingall} dentro de Mininet y escuchando con Wireshark.
 
@@ -126,7 +123,7 @@ IMAGEN TRAZA WIRESHARK CON EL PINGALL DE MININET
 % \includegraphics[scale=0.5]{wireshark_pingall.png}
 \end{center}
 
-Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simulamos clientes y servidores. En el ejemplo a continuación, el host h1 actúa como cliente y el host h3 actúa como servidor, comunicándose por TCP.
+Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simulamos clientes y servidores, usando conexiones tanto TCP como UDP. En el ejemplo a continuación, el host h1 actúa como cliente y el host h3 actúa como servidor, comunicándose por TCP.
 
 \begin{center}
 \includegraphics[scale=0.37]{mininet_iperf_basico.png}
