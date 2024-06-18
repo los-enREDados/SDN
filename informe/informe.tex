@@ -91,14 +91,14 @@ Para utilizar Mininet, la topología se define en \texttt{mytopo.py}. La misma r
 
 Al correr el comando para levantar Mininet, se establece la IP del controlador que se va a utilizar. Esto es para que, luego, cuando corramos el controlador, el mismo pueda modificar los switches de la topología y maneje el control plane de la red de Mininet.
 
-\subsection{POX - WIP}\label{pox}
-Para implementar el controlador con OpenFlow, se utilizó la biblioteca POX. El controlador utiliza L2 learning para que los switches aprendan automáticamente a reenviar paquetes.
+\subsection{POX }\label{pox}
+Para implementar el controlador con OpenFlow, se utilizó la biblioteca POX. El controlador utiliza P2 learning para que los switches aprendan automáticamente a reenviar paquetes.
 
-Para el firewall implementamos el metodo \texttt{\_handle\_ConnectionUp} que se encarga de instalar las reglas en el switch designado como firewall. Para esto, se lee el archivo \texttt{policies.json} que contiene las reglas a aplicar y se las traduce a objetos del tipo \texttt{ofp\_match}. Este objeto es un conjunto de criterios que se utilizan para identificar flujos de red en el contexto de utilizacion de OpenFlow. 
+Para el firewall implementamos el método \texttt{\_handle\_ConnectionUp} que se encarga de instalar las reglas en el switch designado como firewall. Para esto, se lee el archivo \texttt{policies.json} que contiene las reglas a aplicar y se las traduce a objetos del tipo \texttt{ofp\_match}. Este objeto es un conjunto de criterios que se utilizan para identificar flujos de red en el contexto de utilización de OpenFlow. 
 
 Luego entonces cuando un paquete llega al switch, se verifica si cumple con alguna de las reglas del firewall. En caso de cumplir con alguna regla, se descarta el paquete. En caso contrario, se lo deja pasar. 
 
-\subsubsection{POX en ejecucion}
+\subsubsection{POX en ejecución}
 
 A continuación se observa lo que el controlador registra al iniciarse:
 \begin{center}
@@ -118,7 +118,7 @@ A continuación se muestra el correcto funcionamiento del controlador, usando \t
 
 \begin{center}
   \includegraphics[scale=0.20]{mininet_pingall.png}
-  \captionof{figure}{Mostrando pox con mininet a la vez}
+  \captionof{figure}{Mostrando pox con Mininet a la vez}
 
 \end{center}
 
@@ -132,17 +132,17 @@ Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simula
 
 \begin{center}
 \includegraphics[scale=0.37]{mininet_iperf_basico.png}
-\captionof{figure}{Hosts de Mininet con iperf basico}
+\captionof{figure}{Hosts de Mininet con iperf básico}
 
 \end{center}
 
 \begin{center}
 \includegraphics[scale=0.2]{iperfTCP.png}
-\captionof{figure}{Imagen Traza Wireshark con el iperf basico}
+\captionof{figure}{Imagen Traza Wireshark con el iperf básico}
 
 \end{center}
 
-\section{Resultados de simulaciones - WIP IMAGENES}\label{pruebas-wip}
+\section{Resultados de simulaciones}\label{pruebas-wip}
 
 \subsection{Puerto Destino 80}
 Simulación para descartar todos los mensajes cuyo puerto destino sea 80. Se utilizan los hosts 1 y 4. 
@@ -202,7 +202,7 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 \subsubsection{Wireshark}
 \begin{center}
 \includegraphics[scale=0.2]{Multi_Rules_WS_.png}
-\captionof{figure}{Logo de wireshark con el switch 2 (izquierda) y switch 4 (derecha) mostrando que los paquetes UDP de h1 no llegan a h4 luego despues de pasar el firewall en switch 3}
+\captionof{figure}{Logo de wireshark con el switch 2 (izquierda) y switch 4 (derecha) mostrando que los paquetes UDP de h1 no llegan a h4 luego después de pasar el firewall en switch 3}
 
 \end{center}
 
@@ -213,7 +213,7 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 \end{center}
 
 \subsection{Dos hosts no se comunican entre sí}
-Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma. Utilizamos el comando pingAll de mininet para demostrar que no se pueden comunicar. Se utilizan los hosts 1 y 3.
+Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma. Utilizamos el comando pingall de Mininet para demostrar que no se pueden comunicar. Se utilizan los hosts 1 y 3.
 
 \subsubsection{Reglas}
 \begin{minted}{js}
@@ -239,7 +239,7 @@ Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunic
 \end{center}
 
 
-\subsection{Mininet PingAll}
+\subsection{Mininet Pingall}
 \begin{center}
   \includegraphics[scale=0.35]{Mininet_Banned_Tupled.png}
   \captionof{figure}{Mininet con Banned Tuple}
@@ -259,7 +259,7 @@ La diferencia más importante entre un Switch convencional y uno OpenFlow es que
 En principio, se podría integrar switches OpenFlow en una red, pero no es algo realmente factible debido a problemas de seguridad, rendimiento e interoperabilidad. En el contexto de interASes, manejar todo desde una única tecnología como OpenFlow podría facilitar la implementación de políticas de tráfico, pero crearía un single point of failure. Una vulnerabilidad en el protocolo OpenFlow expondría todo el Internet global. Además, sin routers, la implementación de NATs sería problemática. Los routers tradicionales, que implementan funciones en hardware, son más eficientes y rápidos, mientras que una red basada únicamente en switches OpenFlow estaría más congestionada. Además, los switches OpenFlow, como el POX, no implementan protocolos cruciales como BGP y OSPF, haciendo imposible la gestión completa de direcciones en una red global solo con switches OpenFlow.
 
 
-\section{Conclusion}
-Gracias a la tecnologia de Openflow; pudimos codificar un firewall dinamico. Este nos permitio describir un set de reglas para filtrar paquetes y luego instalar dichas reglas de forma remota a un switch.
+\section{Conclusión}
+Gracias a la tecnología de Openflow; pudimos codificar un firewall dinámico. Este nos permitió describir un set de reglas para filtrar paquetes y luego instalar dichas reglas de forma remota a un switch.
 
 \end{document}
