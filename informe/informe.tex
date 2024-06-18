@@ -164,9 +164,9 @@ Simulación para descartar todos los mensajes cuyo puerto destino sea 80.
 \end{center}
 
 \subsubsection{Logs del controlador}
-\begin{center}
-% \includegraphics[scale=0.35]{controller_logs_80.png}
-\end{center}
+% \begin{center}
+%   \inputminted{text}{logs/Banned_Tuple_Log.txt}
+% \end{center}
 
 \subsection{Host 1, Puerto 5001 y UDP}
 Simulación para descartar todos los mensajes que provengan del host 1, tengan como puerto destino el 5001, y utilicen el protocolo UDP.
@@ -195,7 +195,7 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 \end{center}
 
 \subsection{Dos hosts no se comunican entre sí}
-Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma.
+Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunicarse de ninguna forma. Utilizamos el comando pingAll de mininet para demostrar que no se pueden comunicar.
 
 \subsubsection{Reglas}
 \begin{minted}{js}
@@ -210,12 +210,19 @@ Simulación donde se eligen dos hosts cualquiera, y los mismos no pueden comunic
 
 \subsubsection{Wireshark}
 \begin{center}
-% \includegraphics[scale=0.35]{wireshark_no_comm.png}
+\includegraphics[scale=0.35]{Banned_Tuple_WS.png}
 \end{center}
+
 
 \subsubsection{Logs del controlador}
 \begin{center}
-% \includegraphics[scale=0.35]{controller_logs_no_comm.png}
+  \inputminted[fontsize=\default]{text}{informe/logs/Banned_Tuple_Log.txt}
+\end{center}
+
+
+\subsection{Mininet PingAll}
+\begin{center}
+\includegraphics[scale=0.35]{Mininet_Banned_Tupled.png}
 \end{center}
 
 \newpage
