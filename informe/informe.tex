@@ -106,7 +106,9 @@ A continuación se observa lo que el controlador registra al iniciarse:
  \captionof{figure}{Pox mostrando las reglas que instalo}
 \end{center}
 
-\subsection{Wireshark \& iperf}\label{wireshark-iperf}
+
+\subsection{Wireshark \& iperf}\label{wireshark-iperf} \
+
 
 Para comprobar el correcto funcionamiento de la red y del Firewall, se utiliza iperf para simular clientes y servidores sin tener que configurarlos manualmente en los hosts de Mininet. 
 
@@ -115,26 +117,31 @@ Por otro lado utilizamos Wireshark para escuchar los paquetes que se envían en 
 A continuación se muestra el correcto funcionamiento del controlador, usando \texttt{pingall} dentro de Mininet y escuchando con Wireshark.
 
 \begin{center}
-    \includegraphics[scale=0.23]{mininet_pingall.png}
+  \includegraphics[scale=0.20]{mininet_pingall.png}
+  \captionof{figure}{Mostrando pox con mininet a la vez}
+
 \end{center}
 
-IMAGEN TRAZA WIRESHARK CON EL PINGALL DE MININET
 \begin{center}
-% \includegraphics[scale=0.5]{wireshark_pingall.png}
-\end{center}
+  \includegraphics[scale=0.3]{pingAll_WS.png}
+  \captionof{figure}{Wireshark con pingall}
 
-Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simulamos clientes y servidores, usando conexiones tanto TCP como UDP. En el ejemplo a continuación, el host h1 actúa como cliente y el host h3 actúa como servidor, comunicándose por TCP.
+\end{center}
+  
+Para comprobar que no solo funciona con ICMP, utilizamos iperf. Con iperf simulamos clientes y servidores, usando conexiones tanto TCP como UDP. En el ejemplo a continuación, el host h2 actúa como cliente y el host h3 actúa como servidor, comunicándose por TCP.
 
 \begin{center}
 \includegraphics[scale=0.37]{mininet_iperf_basico.png}
+\captionof{figure}{Hosts de Mininet con iperf basico}
+
 \end{center}
 
-IMAGEN TRAZA WIRESHARK CON EL IPERF BASICO
 \begin{center}
-% \includegraphics[scale=0.35]{wireshark_iperf_basico.png}
+\includegraphics[scale=0.2]{iperfTCP.png}
+\captionof{figure}{Imagen Traza Wireshark con el iperf basico}
+
 \end{center}
 
-\newpage
 \section{Resultados de simulaciones - WIP IMAGENES}\label{pruebas-wip}
 
 \subsection{Puerto Destino 80}
