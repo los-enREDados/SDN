@@ -1,0 +1,70 @@
+ 
+DEBUG:core:POX 0.6.0 (fangtooth) going up...
+DEBUG:core:Running on CPython (2.7.18/Oct 15 2023 16:43:11)
+DEBUG:core:Platform is Linux-5.15.0-112-generic-x86_64-with-LinuxMint-21-vanessa
+INFO:core:POX 0.6.0 (fangtooth) is up.
+DEBUG:openflow.of_01:Listening on 0.0.0.0:6633
+INFO:openflow.of_01:[00-00-00-00-00-01 2] connected
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-01 2]
+INFO:openflow.of_01:[00-00-00-00-00-03 4] connected
+DEBUG:firewall:Firewall rules installed on 00-00-00-00-00-03
+DEBUG:firewall:Installing policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  tp_dst: 80
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-03 4]
+INFO:openflow.of_01:[00-00-00-00-00-02 5] connected
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-02 5]
+INFO:openflow.of_01:[00-00-00-00-00-04 3] connected
+DEBUG:forwarding.l2_learning:Connection [00-00-00-00-00-04 3]
+DEBUG:openflow.of_01:1 connection aborted
+DEBUG:forwarding.l2_learning:installing flow for 9e:40:bd:56:34:1f.3 -> ea:7b:a6:77:95:68.1
+DEBUG:forwarding.l2_learning:installing flow for 9e:40:bd:56:34:1f.2 -> ea:7b:a6:77:95:68.1
+DEBUG:forwarding.l2_learning:installing flow for 9e:40:bd:56:34:1f.2 -> ea:7b:a6:77:95:68.1
+DEBUG:forwarding.l2_learning:installing flow for 9e:40:bd:56:34:1f.3 -> ea:7b:a6:77:95:68.1
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.2
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.2
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3
+(...)
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.2
+DEBUG:firewall:Packet from 10.0.0.1 -> 10.0.0.4 dropped with policy: ofp_match
+  dl_type: 0x800
+  nw_proto: 17
+  nw_src: 10.0.0.1
+  tp_dst: 5001
+DEBUG:forwarding.l2_learning:installing flow for ea:7b:a6:77:95:68.1 -> 9e:40:bd:56:34:1f.3

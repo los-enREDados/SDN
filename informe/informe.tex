@@ -170,8 +170,6 @@ Simulación para descartar todos los mensajes cuyo puerto destino sea 80. Se uti
 \captionof{figure}{Wireshark con puerto 80 bloqueado mostrando que no llega el SYN} 
 \end{center}
 
-
-
 \subsubsection{Logs del controlador}
 \begin{center}
   \inputminted[fontsize=\footnotesize]{text}{informe/logs/Port_80_Log.txt}
@@ -193,14 +191,22 @@ Simulación para descartar todos los mensajes que provengan del host 1, tengan c
 }
 \end{minted}
 
+
+
+\subsection{Iperf}
+\begin{center}
+\includegraphics[scale=0.35]{Multi_Rules_UDP_P80_h1_Iperf.png}
+\captionof{figure}{Iperf cliente en h1 y servidor en h4 UDP en puerto 5001 que no se pueden comunicar}
+\end{center}
+
 \subsubsection{Wireshark}
 \begin{center}
-% \includegraphics[scale=0.35]{wireshark_udp.png}
+\includegraphics[scale=0.2]{Multi_Rules_WS_.png}
 \end{center}
 
 \subsubsection{Logs del controlador}
 \begin{center}
-% \includegraphics[scale=0.35]{controller_logs_udp.png}
+  \inputminted[fontsize=\footnotesize]{text}{informe/logs/Multi_Rules_WS.txt}
 \end{center}
 
 \subsection{Dos hosts no se comunican entre sí}
