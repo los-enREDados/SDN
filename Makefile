@@ -9,7 +9,7 @@ PORT            := 8080
 IP              := 10.0.0.1
 PROT            := TCP
 PROTFLAGS       :=
-SWITCHID        := 2
+SWITCHID        := 3
 LOG_FILE = log.txt
 
 # IPERFFLAGS      := 
